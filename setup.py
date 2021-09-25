@@ -56,9 +56,7 @@ setup(
         ],
     },
     entry_points={
-        "console_scripts": [
-            "openfisca-us = openfisca_us.tools.cli:main",
-        ],
+        "console_scripts": ["openfisca-us = openfisca_us.tools.cli:main",],
     },
     packages=find_packages(),
 )

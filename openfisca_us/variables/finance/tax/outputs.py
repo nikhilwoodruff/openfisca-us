@@ -11,8 +11,7 @@ class TaxInc(Variable):
     def formula(tax_unit, period, parameters):
         # not accurate, for demo
         return max_(
-            0,
-            tax_unit("filer_earned", period) - tax_unit("standard", period),
+            0, tax_unit("filer_earned", period) - tax_unit("standard", period),
         )
 
 
@@ -413,6 +412,11 @@ class c00100(Variable):
     entity = TaxUnit
     definition_period = YEAR
     documentation = """Adjusted Gross Income (AGI)"""
+
+    def formula(tax_unit, period, parameters):
+        return add(tax_unit, period, *["ymod1", "c02500"]) - tax_unit(
+            "c02900", period
+        )
 
 
 class c01000(Variable):
@@ -986,6 +990,9 @@ class pre_c04600(Variable):
     definition_period = YEAR
     documentation = """Personal exemption before phase-out"""
 
+    def formula(tax_unit, period, parameters):
+        return pre_
+
 
 class codtc_limited(Variable):
     value_type = float
@@ -1029,10 +1036,7 @@ class ptax_was(Variable):
 
     def formula(tax_unit, period, parameters):
         ptax_was = add(
-            tax_unit,
-            period,
-            "filer_ptax_ss_was",
-            "filer_ptax_mc_was",
+            tax_unit, period, "filer_ptax_ss_was", "filer_ptax_mc_was",
         )
         return ptax_was
 

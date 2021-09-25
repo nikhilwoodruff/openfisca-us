@@ -53,9 +53,7 @@ class Microsimulation:
         for variable in data.keys():
             if variable in self.system.variables:
                 model.set_input(
-                    variable,
-                    year,
-                    np.array(data[variable]),
+                    variable, year, np.array(data[variable]),
                 )
 
         self.simulation = model
@@ -159,9 +157,10 @@ class Microsimulation:
                         lambda *args: existing_var_class.formula(*args) + delta
                     )
                 else:
-                    altered_variable.formula = (
-                        lambda *args: existing_var_class.formula(*args)
-                        * (1.0 + delta / 100)
+                    altered_variable.formula = lambda *args: existing_var_class.formula(
+                        *args
+                    ) * (
+                        1.0 + delta / 100
                     )
 
                 class bonus_ref(Reform):
@@ -211,9 +210,10 @@ class Microsimulation:
                         )
                     else:
                         delta /= 100
-                        altered_variable.formula = (
-                            lambda *args: existing_var_class.formula(*args)
-                            * (1.0 + delta * (index_in_group == i) * adult)
+                        altered_variable.formula = lambda *args: existing_var_class.formula(
+                            *args
+                        ) * (
+                            1.0 + delta * (index_in_group == i) * adult
                         )
 
                     class bonus_ref(Reform):
